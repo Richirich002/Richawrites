@@ -162,54 +162,70 @@ footer a{color:var(--pink);font-weight:700;margin:0 8px}
 /* =====================================================================
    EDIT ONLY THIS SECTION (SITE DATA). Everything below it is the engine.
    ===================================================================== */
-
-/* 1. SITE DETAILS */
-const SITE = {
-  name: "Richawrites",   // also change the <title> and logo at the top of the file
-  title: "Stories, ideas and everyday wonders.",
-  tagline: "Essays, parenting notes, travel diaries and book thoughts, written with a cup of chai in hand.",
-  about: "Hi, I am Richa, a freelance writer who loves turning small moments into words. Write a few lines about yourself here, what you write about and why.",
-  photo: "",               // e.g. "images/me.jpg" (leave empty for a colourful circle)
-  footer: "© 2026 Richawrites. All rights reserved.",
-  links: [                 // add or remove social links
-    { label: "Instagram", url: "https://instagram.com/" },
-    { label: "LinkedIn",  url: "https://linkedin.com/" },
-    { label: "Email",     url: "mailto:you@example.com" }
-  ]
-};
-
-/* 2. GENRE COLOURS: add a new genre here and give it a colour */
-const GENRES = {
-  "Parenting":   "#FF3D81",
-  "Travel":      "#12B5A6",
-  "Education":   "#4C7DFF",
-  "Lifestyle":   "#FF8A3D",
-  "Book Review": "#8B5CF6"
-};
-
-/* 3. ARTICLES: copy one block, paste it at the TOP, and change the text.
-      image: put a picture path like "images/chai.jpg" or a web link. Leave "" for a colour cover.
-      body:  write paragraphs inside <p>...</p>. Add pictures with <img src="images/pic.jpg" alt="describe it">.
-             Sub-headings use <h4>...</h4>. */
-const ARTICLES = [
- {
-    title: "Why Every Child Needs Ten Minutes of Boredom",
-    genre: "Parenting",
-    date: "19 Oct 2026",
-    read: "4 min read",
-    image: "images/watermarked_img_5513355757837925217.png",
-    excerpt: "We rush to fill every free minute for our kids. Here is why a little empty time may be the best gift.",
-    body: `<p>We live in an age of constant stimulation. From the moment our children wake up until it is time for lights out, their days are carefully curated and packed with activities. School, homework, tuition classes, art workshops, piano lessons, and structured playdates fill every available slot. As parents, we often do this out of love and a deep desire to give them the best possible head start in life. We worry that an idle child is a missed opportunity for learning.</p>
-    <p>Yet, in our quest to keep them engaged, we might be robbing them of one of the most powerful catalysts for growth: boredom.</p>
-    <h4>The Magic of the Empty Hour</h4>
-    <p>When a child announces, "I am bored," what they are usually experiencing is a brief vacuum in external direction. For a moment, the television is off, the toys have lost their novelty, and there is no scheduled activity to rush off to.</p>
-    <p>In that quiet discomfort lies the magic.</p>
-    <p>Boredom is not an empty state; it is a pressurized space waiting to be filled. When adults stop stepping in to entertain, rescue, or organize, something remarkable happens: the child’s own imagination steps up to take the wheel.</p>
-    <p>A simple cardboard box suddenly transforms into a spaceship. A pile of sofa cushions becomes a mountain range that must be summited. A few fallen leaves and twigs in the backyard turn into ingredients for a secret potion. Without the scaffolding of adult-led entertainment, children learn to look inward. They invent rules, negotiate roles with siblings, solve spatial puzzles, and test out creative ideas.</p>
-    <h4>Building Resilience Through Stillness</h4>
-    <p>Beyond creativity, unstructured time teaches emotional regulation and resilience. Constant entertainment teaches children that comfort comes from the outside. When they experience downtime, they learn how to sit with their own thoughts, manage restlessness, and discover that they don't need a screen or an organized event to feel content.</p>
-    <p>This self-soothing ability is a vital life skill. Children who are constantly entertained often struggle when faced with unstructured environments later in life because they have never had to practice the art of self-initiation.</p>
-    <h4>How to Give Them Ten Minutes</h4>
+/* 3. ARTICLES: copy one block, paste it at the TOP, and change the text. image: put a picture path like "images/chai.jpg" or a web link. Leave "" for a colour cover. body:  write paragraphs inside <p>...</p>. Add pictures with <img src="images/pic.jpg" alt="describe it">. Sub-headings use <h4>...</h4>. */
+const ARTICLES = [{
+        title: "Why Every Child Needs Ten Minutes of Boredom",
+        genre: "Parenting",
+        date: "19 Oct 2026",
+        read: "4 min read",
+        image: "images/watermarked_img_5513355757837925217.png",
+        excerpt: "We rush to fill every free minute for our kids. Here is why a little empty time may be the best gift.",
+        body: `<p>We live in an age of constant stimulation. From the moment our children wake up until it is time for lights out, their days are carefully curated and packed with activities. School, homework, tuition classes, art workshops, piano lessons, and structured playdates fill every available slot. As parents, we often do this out of love and a deep desire to give them the best possible head start in life. We worry that an idle child is a missed opportunity for learning.</p>
+        <p>Yet, in our quest to keep them engaged, we might be robbing them of one of the most powerful catalysts for growth: boredom.</p>
+        <h4>The Magic of the Empty Hour</h4>
+        <p>When a child announces, "I am bored," what they are usually experiencing is a brief vacuum in external direction. For a moment, the television is off, the toys have lost their novelty, and there is no scheduled activity to rush off to.</p>
+        <p>In that quiet discomfort lies the magic.</p>
+        <p>Boredom is not an empty state; it is a pressurized space waiting to be filled. When adults stop stepping in to entertain, rescue, or organize, something remarkable happens: the child’s own imagination steps up to take the wheel.</p>
+        <p>A simple cardboard box suddenly transforms into a spaceship. A pile of sofa cushions becomes a mountain range that must be summited. A few fallen leaves and twigs in the backyard turn into ingredients for a secret potion. Without the scaffolding of adult-led entertainment, children learn to look inward. They invent rules, negotiate roles with siblings, solve spatial puzzles, and test out creative ideas.</p>
+        <h4>Building Resilience Through Stillness</h4>
+        <p>Beyond creativity, unstructured time teaches emotional regulation and resilience. Constant entertainment teaches children that comfort comes from the outside. When they experience downtime, they learn how to sit with their own thoughts, manage restlessness, and discover that they don't need a screen or an organized event to feel content.</p>
+        <p>This self-soothing ability is a vital life skill. Children who are constantly entertained often struggle when faced with unstructured environments later in life because they have never had to practice the art of self-initiation.</p>
+        <h4>How to Give Them Ten Minutes</h4>
+        <p>You don't need to completely overhaul your daily routine or abandon structured learning to let your children experience this. Start small. Give them just ten or fifteen minutes of unscripted, screen-free downtime every day.</p>
+        <ul>
+            <li><strong>Step back:</strong> Resist the immediate urge to offer suggestions when you hear "I'm bored." Smile gently and say, "I'm sure you'll figure out something wonderful to do."</li>
+            <li><strong>Provide open-ended materials:</strong> Keep a basket of simple items nearby—paper, crayons, blocks, fabric scraps, or old boxes—rather than complex toys with a single function.</li>
+            <li><strong>Embrace the mess:</strong> True creativity often looks a bit chaotic. Allow the floor to be covered in paper scraps or cushions for a little while.</li>
+        </ul>
+        <p>The next time your child looks up and sighs that there is nothing to do, take a deep breath and view it as a gift. That little sigh is simply the prelude to a new adventure born entirely from their own mind.</p>`
+    },
+    {
+        title: "Three Quiet Days in the Hills",
+        genre: "Travel",
+        date: "02 Oct 2026",
+        read: "6 min read",
+        image: "",
+        excerpt: "No itinerary, no alarms. What happened when I let the mountains set the pace.",
+        body: `<p>Write your travel story here.</p><p>Tell readers what you saw, ate and felt.</p>`
+    },
+    {
+        title: "Making Letters Fun: Ideas from the Classroom",
+        genre: "Education",
+        date: "21 Sep 2026",
+        read: "5 min read",
+        image: "",
+        excerpt: "Simple, playful ways teachers and parents can help little ones fall in love with the alphabet.",
+        body: `<p>Write your education article here.</p>`
+    },
+    {
+        title: "The Slow Sunday Routine That Changed My Week",
+        genre: "Lifestyle",
+        date: "10 Sep 2026",
+        read: "3 min read",
+        image: "",
+        excerpt: "One small ritual, a calmer Monday. Here is how it works.",
+        body: `<p>Write your lifestyle article here.</p>`
+    },
+    {
+        title: "A Book That Stayed With Me",
+        genre: "Book Review",
+        date: "28 Aug 2026",
+        read: "4 min read",
+        image: "",
+        excerpt: "Thoughts on a story I finished weeks ago and still think about every day.",
+        body: `<p>Write your book review here.</p>`
+    }
+];
     <p>You don't need to completely overhaul your daily routine or abandon structured learning to let your children experience this. Start small. Give them just ten or fifteen minutes of unscripted, screen-free downtime every day.</p>
     <ul>
         <li><strong>Step back:</strong> Resist the immediate urge to offer suggestions when you hear "I'm bored." Smile gently and say, "I'm sure you'll figure out something wonderful to do."</li>
