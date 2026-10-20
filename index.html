@@ -76,23 +76,32 @@ h2{font-family:var(--serif);font-weight:800;font-size:2.2rem;margin-bottom:8px}
 .paper .text h4{font-family:var(--serif);font-size:1.3rem;margin:24px 0 8px}
 .close{float:right;margin:14px;background:#fff;border:2px solid var(--ink);border-radius:50%;width:42px;height:42px;font-size:1.2rem;cursor:pointer;position:relative;z-index:2}
 
-/* podcast */
-.pod{background:var(--ink);color:#fff}
-.pod .sub{color:#c9bde8}
-.eps{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:22px}
-.ep{background:#3a2766;border-radius:20px;padding:22px}
-.ep .ico{width:48px;height:48px;border-radius:14px;background:var(--sun);display:grid;place-items:center;font-size:1.5rem;margin-bottom:12px}
-.ep h3{font-family:var(--serif);font-size:1.25rem;margin-bottom:6px}
-.ep p{color:#c9bde8;font-size:.93rem;margin-bottom:14px}
-.ep audio{width:100%}
-.ep iframe{width:100%;border:0;border-radius:12px;min-height:152px}
-
 /* about + footer */
 .about .wrap{display:grid;grid-template-columns:200px 1fr;gap:34px;align-items:center}
 .photo{width:200px;height:200px;border-radius:50%;background:linear-gradient(135deg,var(--pink),var(--sun));background-size:cover;background-position:center;border:4px solid var(--ink)}
 footer{background:var(--wash);padding:34px 0;text-align:center;color:var(--muted)}
 footer a{color:var(--pink);font-weight:700;margin:0 8px}
 
+
+.writebtn{background:var(--ink);color:#fff!important;padding:8px 16px;border-radius:999px}
+.writebtn:hover{background:var(--pink)}
+.strip{background:var(--pink);color:#fff;overflow:hidden;white-space:nowrap;border-block:2px solid var(--ink)}
+.track{display:inline-block;padding:12px 0;font-family:var(--serif);font-weight:800;font-size:1.2rem;animation:slide 28s linear infinite}
+.track span{margin:0 22px}
+@keyframes slide{to{transform:translateX(-50%)}}
+.card .cover{transition:background-size .4s}
+.card:hover .cover{background-size:112%}
+.mine{background:var(--sun);color:var(--ink);font-weight:700;font-size:.75rem;padding:3px 10px;border-radius:999px;margin-left:6px}
+.paper figure{margin:8px 0 26px}
+.paper figure img{width:100%;margin:0;display:block}
+.paper figcaption{font-size:.85rem;color:var(--muted);margin-top:6px;text-align:center}
+.paper .lead{font-size:1.25rem}
+.form label{display:block;font-weight:700;margin:14px 0 5px}
+.form input,.form select,.form textarea{width:100%;padding:11px 14px;border:2px solid var(--ink);border-radius:12px;font:inherit;background:#fff}
+.form textarea{min-height:220px}
+.form small{color:var(--muted)}
+.mini{background:var(--wash);border-radius:14px;padding:12px 16px;margin-top:10px;display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
+.mini button{border:2px solid var(--ink);background:#fff;border-radius:999px;padding:5px 14px;font:inherit;font-weight:600;cursor:pointer;margin-left:6px}
 @media(max-width:640px){
   nav a{margin-left:14px;font-size:.92rem}
   .about .wrap{grid-template-columns:1fr;text-align:center}
@@ -108,7 +117,7 @@ footer a{color:var(--pink);font-weight:700;margin:0 8px}
 <header>
   <div class="wrap">
     <a class="logo" href="#top">Richa<span>writes</span></a>
-    <nav><a href="#articles">Articles</a><a href="#podcast">Podcast</a><a href="#about">About</a></nav>
+    <nav><a href="#articles">Articles</a><a href="#about">About</a><a href="#" id="deskBtn" class="writebtn">✍️ Write</a></nav>
   </div>
 </header>
 
@@ -118,9 +127,10 @@ footer a{color:var(--pink);font-weight:700;margin:0 8px}
     <h1 id="siteTitle"></h1>
     <p id="siteTagline"></p>
     <a class="btn" href="#articles">Read articles</a>
-    <a class="btn alt" href="#podcast">Listen to the podcast</a>
   </div>
 </div>
+
+<div class="strip" aria-hidden="true"><div class="track"><span>✦ Parenting</span><span>✦ Travel</span><span>✦ Education</span><span>✦ Lifestyle</span><span>✦ Book Review</span><span>✦ Parenting</span><span>✦ Travel</span><span>✦ Education</span><span>✦ Lifestyle</span><span>✦ Book Review</span><span>✦ Parenting</span><span>✦ Travel</span><span>✦ Education</span><span>✦ Lifestyle</span><span>✦ Book Review</span><span>✦ Parenting</span><span>✦ Travel</span><span>✦ Education</span><span>✦ Lifestyle</span><span>✦ Book Review</span></div></div>
 
 <section id="articles">
   <div class="wrap">
@@ -128,14 +138,6 @@ footer a{color:var(--pink);font-weight:700;margin:0 8px}
     <p class="sub">Pick a genre or browse everything.</p>
     <div class="filters" id="filters"></div>
     <div class="grid" id="grid"></div>
-  </div>
-</section>
-
-<section class="pod" id="podcast">
-  <div class="wrap">
-    <h2>Podcast</h2>
-    <p class="sub">Press play, or open the episode on your favourite app.</p>
-    <div class="eps" id="eps"></div>
   </div>
 </section>
 
@@ -162,78 +164,57 @@ footer a{color:var(--pink);font-weight:700;margin:0 8px}
 /* =====================================================================
    EDIT ONLY THIS SECTION (SITE DATA). Everything below it is the engine.
    ===================================================================== */
-/* 3. ARTICLES: copy one block, paste it at the TOP, and change the text. image: put a picture path like "images/chai.jpg" or a web link. Leave "" for a colour cover. body:  write paragraphs inside <p>...</p>. Add pictures with <img src="images/pic.jpg" alt="describe it">. Sub-headings use <h4>...</h4>. */
-const ARTICLES = [{
-        title: "Why Every Child Needs Ten Minutes of Boredom",
-        genre: "Parenting",
-        date: "19 Oct 2026",
-        read: "4 min read",
-        image: "images/watermarked_img_5513355757837925217.png",
-        excerpt: "We rush to fill every free minute for our kids. Here is why a little empty time may be the best gift.",
-        body: `<p>We live in an age of constant stimulation. From the moment our children wake up until it is time for lights out, their days are carefully curated and packed with activities. School, homework, tuition classes, art workshops, piano lessons, and structured playdates fill every available slot. As parents, we often do this out of love and a deep desire to give them the best possible head start in life. We worry that an idle child is a missed opportunity for learning.</p>
-        <p>Yet, in our quest to keep them engaged, we might be robbing them of one of the most powerful catalysts for growth: boredom.</p>
-        <h4>The Magic of the Empty Hour</h4>
-        <p>When a child announces, "I am bored," what they are usually experiencing is a brief vacuum in external direction. For a moment, the television is off, the toys have lost their novelty, and there is no scheduled activity to rush off to.</p>
-        <p>In that quiet discomfort lies the magic.</p>
-        <p>Boredom is not an empty state; it is a pressurized space waiting to be filled. When adults stop stepping in to entertain, rescue, or organize, something remarkable happens: the child’s own imagination steps up to take the wheel.</p>
-        <p>A simple cardboard box suddenly transforms into a spaceship. A pile of sofa cushions becomes a mountain range that must be summited. A few fallen leaves and twigs in the backyard turn into ingredients for a secret potion. Without the scaffolding of adult-led entertainment, children learn to look inward. They invent rules, negotiate roles with siblings, solve spatial puzzles, and test out creative ideas.</p>
-        <h4>Building Resilience Through Stillness</h4>
-        <p>Beyond creativity, unstructured time teaches emotional regulation and resilience. Constant entertainment teaches children that comfort comes from the outside. When they experience downtime, they learn how to sit with their own thoughts, manage restlessness, and discover that they don't need a screen or an organized event to feel content.</p>
-        <p>This self-soothing ability is a vital life skill. Children who are constantly entertained often struggle when faced with unstructured environments later in life because they have never had to practice the art of self-initiation.</p>
-        <h4>How to Give Them Ten Minutes</h4>
-        <p>You don't need to completely overhaul your daily routine or abandon structured learning to let your children experience this. Start small. Give them just ten or fifteen minutes of unscripted, screen-free downtime every day.</p>
-        <ul>
-            <li><strong>Step back:</strong> Resist the immediate urge to offer suggestions when you hear "I'm bored." Smile gently and say, "I'm sure you'll figure out something wonderful to do."</li>
-            <li><strong>Provide open-ended materials:</strong> Keep a basket of simple items nearby—paper, crayons, blocks, fabric scraps, or old boxes—rather than complex toys with a single function.</li>
-            <li><strong>Embrace the mess:</strong> True creativity often looks a bit chaotic. Allow the floor to be covered in paper scraps or cushions for a little while.</li>
-        </ul>
-        <p>The next time your child looks up and sighs that there is nothing to do, take a deep breath and view it as a gift. That little sigh is simply the prelude to a new adventure born entirely from their own mind.</p>`
-    },
-    {
-        title: "Three Quiet Days in the Hills",
-        genre: "Travel",
-        date: "02 Oct 2026",
-        read: "6 min read",
-        image: "",
-        excerpt: "No itinerary, no alarms. What happened when I let the mountains set the pace.",
-        body: `<p>Write your travel story here.</p><p>Tell readers what you saw, ate and felt.</p>`
-    },
-    {
-        title: "Making Letters Fun: Ideas from the Classroom",
-        genre: "Education",
-        date: "21 Sep 2026",
-        read: "5 min read",
-        image: "",
-        excerpt: "Simple, playful ways teachers and parents can help little ones fall in love with the alphabet.",
-        body: `<p>Write your education article here.</p>`
-    },
-    {
-        title: "The Slow Sunday Routine That Changed My Week",
-        genre: "Lifestyle",
-        date: "10 Sep 2026",
-        read: "3 min read",
-        image: "",
-        excerpt: "One small ritual, a calmer Monday. Here is how it works.",
-        body: `<p>Write your lifestyle article here.</p>`
-    },
-    {
-        title: "A Book That Stayed With Me",
-        genre: "Book Review",
-        date: "28 Aug 2026",
-        read: "4 min read",
-        image: "",
-        excerpt: "Thoughts on a story I finished weeks ago and still think about every day.",
-        body: `<p>Write your book review here.</p>`
-    }
-];
-    <p>You don't need to completely overhaul your daily routine or abandon structured learning to let your children experience this. Start small. Give them just ten or fifteen minutes of unscripted, screen-free downtime every day.</p>
-    <ul>
-        <li><strong>Step back:</strong> Resist the immediate urge to offer suggestions when you hear "I'm bored." Smile gently and say, "I'm sure you'll figure out something wonderful to do."</li>
-        <li><strong>Provide open-ended materials:</strong> Keep a basket of simple items nearby—paper, crayons, blocks, fabric scraps, or old boxes—rather than complex toys with a single function.</li>
-        <li><strong>Embrace the mess:</strong> True creativity often looks a bit chaotic. Allow the floor to be covered in paper scraps or cushions for a little while.</li>
-    </ul>
-    <p>The next time your child looks up and sighs that there is nothing to do, take a deep breath and view it as a gift. That little sigh is simply the prelude to a new adventure born entirely from their own mind.</p>`
-}
+
+/* 1. SITE DETAILS */
+const SITE = {
+  name: "Richawrites",   // also change the <title> and logo at the top of the file
+  title: "Stories, ideas and everyday wonders.",
+  tagline: "Essays, parenting notes, travel diaries and book thoughts, written with a cup of chai in hand.",
+  about: "Hi, I am Richa, a freelance writer who loves turning small moments into words. Write a few lines about yourself here, what you write about and why.",
+  photo: "",               // e.g. "images/me.jpg" (leave empty for a colourful circle)
+  footer: "© 2026 Richawrites. All rights reserved.",
+  links: [                 // add or remove social links
+    { label: "Instagram", url: "https://instagram.com/" },
+    { label: "LinkedIn",  url: "https://linkedin.com/" },
+    { label: "Email",     url: "mailto:you@example.com" }
+  ]
+};
+
+/* 2. GENRE COLOURS: add a new genre here and give it a colour */
+const GENRES = {
+  "Parenting":   "#FF3D81",
+  "Travel":      "#12B5A6",
+  "Education":   "#4C7DFF",
+  "Lifestyle":   "#FF8A3D",
+  "Book Review": "#8B5CF6"
+};
+
+/* 3. ARTICLES: copy one block, paste it at the TOP, and change the text.
+      image: a picture path like "images/chai.jpg" or a web link. Leave "" for a colour cover. (Leave "" and a colourful illustration shows automatically. To use your own photo, put it in an images folder and write its path.)
+      body:  write paragraphs inside <p>...</p>. Add pictures with <img src="images/pic.jpg" alt="describe it">.
+             Sub-headings use <h4>...</h4>. */
+const ARTICLES = [
+  {
+    title: "Why Every Child Needs Ten Minutes of Boredom",
+    genre: "Parenting",
+    date: "19 Oct 2026",
+    read: "5 min read",
+    image: "",
+    excerpt: "We rush to fill every free minute for our kids. Here is why a little empty time may be the best gift.",
+    body: `
+      <p class="lead">Last Sunday, my niece announced that she was bored. My first instinct was to hand her a tablet. Instead, I did nothing, and what happened next changed how I think about childhood.</p>
+      <p>Modern parenting is busy. Between school, tuition, hobby classes and screens, many children barely get a moment that belongs only to them. We call it enrichment, but somewhere along the way we forgot that the mind also needs space to wander.</p>
+      <h4>What boredom actually does</h4>
+      <p>When a child has nothing planned, the brain starts looking for something to do. That search is where imagination is born. A cardboard box becomes a spaceship. A few spoons become a band. Psychologists often link unstructured time with creativity, problem solving and emotional regulation, because the child learns to entertain and calm herself without an adult stepping in.</p>
+      <figure><img data-g="Parenting" data-e="🎨" alt="Free play lets imagination lead the way." loading="lazy" onerror="this.parentNode.style.display='none'"><figcaption>Free play lets imagination lead the way.</figcaption></figure>
+      <h4>How to make room for it</h4>
+      <p>You do not need a big plan. Start with ten minutes a day with no screens and no instructions. Keep a few simple things within reach: paper, crayons, building blocks, old clothes for dress-up. Then resist the urge to rescue. The first few minutes will often sound like complaining. Stay calm and let it pass.</p>
+      <p>Some children will whine for the first week. That is normal. They are used to being entertained, and they are simply learning a new skill.</p>
+      <h4>The quiet benefits show up later</h4>
+      <p>Within a few weeks, many parents notice small changes. Children start inventing games, talking to themselves in stories, and finishing projects they began on their own. They also become more comfortable with silence, which is a gift in a world that rarely stops talking.</p>
+      <figure><img data-g="Parenting" data-e="🧱" alt="Simple objects often become the best toys." loading="lazy" onerror="this.parentNode.style.display='none'"><figcaption>Simple objects often become the best toys.</figcaption></figure>
+      <p>My niece, by the way, spent forty minutes building a house for her toy giraffe out of pillows. She proudly gave me a tour. I did not hand over the tablet, and I am glad I did not.</p>
+      <p>So the next time your child says, "I am bored," try smiling and saying, "Great. Let us see what you come up with." You might be surprised.</p>`
   },
   {
     title: "Three Quiet Days in the Hills",
@@ -242,53 +223,85 @@ const ARTICLES = [{
     read: "6 min read",
     image: "",
     excerpt: "No itinerary, no alarms. What happened when I let the mountains set the pace.",
-    body: `<p>Write your travel story here.</p><p>Tell readers what you saw, ate and felt.</p>`
+    body: `
+      <p class="lead">I packed a small bag, a notebook and exactly zero plans. The only rule for this trip was that there were no rules.</p>
+      <p>The road to the hills curled upward through pine forests, and with every bend my phone signal weakened. By the time the little guesthouse appeared, with its blue windows and a dog asleep on the steps, I had already stopped checking messages.</p>
+      <h4>Day one: learning to slow down</h4>
+      <p>I woke to cold air and the smell of woodsmoke. Breakfast was parathas and sweet tea on a balcony that overlooked the valley. Normally I would have hurried to see the sights. This time I simply sat, watching clouds slide down the mountains like slow, silent waterfalls. It took me nearly two hours to finish one cup of tea, and it was the best two hours of the month.</p>
+      <figure><img data-g="Travel" data-e="🏔️" alt="Morning clouds drifting through the valley." loading="lazy" onerror="this.parentNode.style.display='none'"><figcaption>Morning clouds drifting through the valley.</figcaption></figure>
+      <h4>Day two: the walk without a destination</h4>
+      <p>A local boy named Aman pointed me to a trail behind the village. There was no signboard and no viewpoint, only a path through rhododendrons and a stream that I crossed on wet stones. I met an old woman collecting firewood who insisted I drink water from her steel flask and tell her where I came from. We spoke in mixed Hindi and gestures, and laughed at all of it.</p>
+      <p>That afternoon I read a whole book on a flat rock, and nobody asked me for anything.</p>
+      <h4>Day three: coming home lighter</h4>
+      <p>On the last morning I watched the sun climb over the ridge and turn the snow peaks pink. I did not take a single photo. Some views want to be kept in the memory instead.</p>
+      <figure><img data-g="Travel" data-e="🌄" alt="The first light on the peaks." loading="lazy" onerror="this.parentNode.style.display='none'"><figcaption>The first light on the peaks.</figcaption></figure>
+      <p>Traveling does not have to mean ticking boxes. Sometimes the best trip is the one where you give yourself permission to do very little, and let a place slowly reach you.</p>`
   },
   {
     title: "Making Letters Fun: Ideas from the Classroom",
     genre: "Education",
     date: "21 Sep 2026",
-    read: "5 min read",
+    read: "6 min read",
     image: "",
     excerpt: "Simple, playful ways teachers and parents can help little ones fall in love with the alphabet.",
-    body: `<p>Write your education article here.</p>`
+    body: `
+      <p class="lead">Ask any teacher of young learners and they will tell you the same thing: children do not learn letters by staring at them. They learn by touching, moving, singing and playing.</p>
+      <p>The alphabet is the first big step into reading and writing, but for a four-year-old, 26 abstract shapes can feel overwhelming. The good news is that with a little creativity, learning letters can feel like a game rather than a lesson.</p>
+      <h4>1. Start with the child's own name</h4>
+      <p>A name is the most meaningful word a child knows. Let them trace it, colour it and spot its letters on posters and labels. When a child sees that the letter M belongs to "Mira", it stops being a random shape and becomes part of who she is.</p>
+      <figure><img data-g="Education" data-e="✍️" alt="A child learning to write her own name." loading="lazy" onerror="this.parentNode.style.display='none'"><figcaption>A child learning to write her own name.</figcaption></figure>
+      <h4>2. Use all the senses</h4>
+      <p>Let children write letters in a tray of sand, shape them with clay, or trace them on a foggy window. This sensory practice builds muscle memory and keeps young learners engaged far longer than a worksheet alone.</p>
+      <h4>3. Pair every letter with a story or sound</h4>
+      <p>A is for apple, but it is even better when the apple has a funny voice, a name and a problem to solve. Songs, rhymes and short stories help letters stick, because the brain remembers emotion far better than lists.</p>
+      <h4>4. Keep practice short and joyful</h4>
+      <p>Ten focused, happy minutes beat an hour of pressure. Mix tracing, colouring and matching so that every session feels fresh. Structured activity books, like printable alphabet workbooks, are a wonderful support because they give children a clear and colourful path, one letter at a time.</p>
+      <figure><img data-g="Education" data-e="🖍️" alt="Colouring and tracing make letters friendly." loading="lazy" onerror="this.parentNode.style.display='none'"><figcaption>Colouring and tracing make letters friendly.</figcaption></figure>
+      <h4>5. Celebrate small wins</h4>
+      <p>A sticker, a clap or a proud smile goes a long way. Confidence is the real foundation of literacy, and it grows when children feel that effort is noticed.</p>
+      <p>Teachers and parents do not need expensive tools. They need patience, play and a belief that every child can learn at their own pace.</p>`
   },
   {
     title: "The Slow Sunday Routine That Changed My Week",
     genre: "Lifestyle",
     date: "10 Sep 2026",
-    read: "3 min read",
+    read: "5 min read",
     image: "",
     excerpt: "One small ritual, a calmer Monday. Here is how it works.",
-    body: `<p>Write your lifestyle article here.</p>`
+    body: `
+      <p class="lead">For years, my Sundays were a blur of laundry, guilt and scrolling. Then I tried something simple, and my entire week began to feel different.</p>
+      <p>I call it the slow Sunday. It is not a strict schedule, only a gentle set of habits that help me end the week softly and begin the next one with a clear head.</p>
+      <h4>Morning: no screens until breakfast</h4>
+      <p>I wake without an alarm, make a proper cup of chai and sit by the window. No phone, no news. Just ten quiet minutes with my thoughts and the morning light. It sounds small, but it sets the tone for the day.</p>
+      <figure><img data-g="Lifestyle" data-e="☕" alt="A quiet cup of chai by the window." loading="lazy" onerror="this.parentNode.style.display='none'"><figcaption>A quiet cup of chai by the window.</figcaption></figure>
+      <h4>Afternoon: reset the space</h4>
+      <p>I tidy only what matters: my desk, my bag and my bedside table. Not a deep clean, just a reset. Walking into a calm room on Monday morning feels like a small present from my past self.</p>
+      <h4>Evening: plan three things</h4>
+      <p>Instead of a long to-do list, I write down just three priorities for the week ahead. If I finish them, the week is a success, and anything else is a bonus. This tiny rule has saved me from countless overwhelmed Mondays.</p>
+      <figure><img data-g="Lifestyle" data-e="📝" alt="Three priorities are enough for a week." loading="lazy" onerror="this.parentNode.style.display='none'"><figcaption>Three priorities are enough for a week.</figcaption></figure>
+      <p>I also cook something comforting, call someone I love and sleep early. Nothing fancy, nothing that needs to be posted online.</p>
+      <p>The magic is that none of this takes much time or money. A slow Sunday is simply a promise to treat yourself with the same care you give everyone else. Try one small piece this weekend and see how your Monday feels.</p>`
   },
   {
     title: "A Book That Stayed With Me",
     genre: "Book Review",
     date: "28 Aug 2026",
-    read: "4 min read",
+    read: "5 min read",
     image: "",
     excerpt: "Thoughts on a story I finished weeks ago and still think about every day.",
-    body: `<p>Write your book review here.</p>`
-  }
-];
-
-/* 4. PODCAST EPISODES
-      Option A (your own audio file):  audio: "audio/episode1.mp3"
-      Option B (Spotify / YouTube embed): embed: "https://open.spotify.com/embed/episode/XXXX"
-      Use one of the two per episode. */
-const EPISODES = [
-  {
-    title: "Episode 1: Why I Started Writing",
-    desc: "A friendly first chat about words, habits and finding your voice.",
-    audio: "",   // e.g. "audio/episode1.mp3"
-    embed: ""    // e.g. a Spotify or YouTube embed link
-  },
-  {
-    title: "Episode 2: Writing Every Day",
-    desc: "Small tricks to keep the pen moving, even on busy days.",
-    audio: "",
-    embed: ""
+    body: `
+      <p class="lead">Some books you finish and shelve. Others follow you around, quietly rearranging how you see ordinary things. This was one of those.</p>
+      <p>I picked it up on a rainy afternoon with no expectations. The first chapter was gentle, almost plain, and I nearly set it aside. But by the third chapter I was fully hooked, not by plot twists but by the way the author noticed small, true things about people.</p>
+      <h4>What works</h4>
+      <p>The strength of this book is its honesty. The characters make mistakes, say the wrong thing and love each other imperfectly, just like real people. The writing is simple and warm, with sentences that you want to read twice. There are no big speeches, only quiet moments that land with surprising force.</p>
+      <figure><img data-g="Book Review" data-e="📖" alt="The best books are meant to be read slowly." loading="lazy" onerror="this.parentNode.style.display='none'"><figcaption>The best books are meant to be read slowly.</figcaption></figure>
+      <h4>What could be better</h4>
+      <p>The middle section moves slowly, and readers who enjoy fast-paced stories may feel restless. A couple of side characters also deserved more space. But these are small complaints for a book that gives so much in return.</p>
+      <h4>Who should read it</h4>
+      <p>If you enjoy thoughtful stories about family, memory and growing up, this book will feel like a long conversation with a wise friend. Keep a cup of tea nearby and read it slowly.</p>
+      <figure><img data-g="Book Review" data-e="📚" alt="A shelf waiting for its next favourite." loading="lazy" onerror="this.parentNode.style.display='none'"><figcaption>A shelf waiting for its next favourite.</figcaption></figure>
+      <p>Weeks later, I still catch myself thinking about its last page. That, to me, is the real mark of a great book: it does not end when you close it.</p>
+      <p><strong>My rating:</strong> 4.5 out of 5 stars.</p>`
   }
 ];
 
@@ -296,7 +309,13 @@ const EPISODES = [
    ENGINE: you do not need to change anything below this line
    ===================================================================== */
 const $ = id => document.getElementById(id);
+const KEY = "richawrites_articles_v1";
 let current = "All";
+let MINE = [];
+try { MINE = JSON.parse(localStorage.getItem(KEY) || "[]"); } catch(e){}
+const all = () => [...MINE, ...ARTICLES];
+const saveMine = () => { try { localStorage.setItem(KEY, JSON.stringify(MINE)); } catch(e){ alert("Browser storage is full. Please use a smaller photo."); } };
+const esc = t => t.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
 
 $("siteTitle").textContent = SITE.title;
 $("siteTagline").textContent = SITE.tagline;
@@ -305,63 +324,92 @@ $("footText").textContent = SITE.footer;
 if (SITE.photo) $("photo").style.backgroundImage = `url('${SITE.photo}')`;
 $("links").innerHTML = SITE.links.map(l => `<a href="${l.url}" target="_blank" rel="noopener">${l.label}</a>`).join("");
 
+const EMO = {"Parenting":"🧸","Travel":"⛰️","Education":"✏️","Lifestyle":"☕","Book Review":"📚"};
+function scene(g,e){
+  const c = GENRES[g] || "#2B1B4E";
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700"><defs><linearGradient id="a" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${c}"/><stop offset="1" stop-color="#FFC93C"/></linearGradient></defs><rect width="1200" height="700" fill="url(#a)"/><circle cx="1010" cy="120" r="190" fill="#fff" fill-opacity=".2"/><circle cx="150" cy="620" r="230" fill="#fff" fill-opacity=".16"/><circle cx="880" cy="600" r="70" fill="#2B1B4E" fill-opacity=".15"/><text x="600" y="440" font-size="300" text-anchor="middle">${e}</text></svg>`;
+  return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
+}
 function coverStyle(a){
   const c = GENRES[a.genre] || "#2B1B4E";
-  return a.image
-    ? `background-image:url('${a.image}')`
-    : `background-image:linear-gradient(135deg,${c},#FFC93C)`;
+  const g = `linear-gradient(135deg,${c},#FFC93C)`;
+  const img = a.image || scene(a.genre, EMO[a.genre] || "✨");
+  return `background-image:url('${img}'),${g}`;
 }
-
 function drawFilters(){
-  const names = ["All", ...Object.keys(GENRES)];
-  $("filters").innerHTML = names.map(n =>
+  $("filters").innerHTML = ["All", ...Object.keys(GENRES)].map(n =>
     `<button class="pill ${n===current?'on':''}" data-g="${n}">${n}</button>`).join("");
-  $("filters").querySelectorAll(".pill").forEach(b =>
-    b.onclick = () => { current = b.dataset.g; drawFilters(); drawCards(); });
+  $("filters").querySelectorAll(".pill").forEach(b => b.onclick = () => { current = b.dataset.g; drawFilters(); drawCards(); });
 }
-
 function drawCards(){
-  const list = ARTICLES.map((a,i)=>({a,i})).filter(x => current==="All" || x.a.genre===current);
+  const list = all().map((a,i)=>({a,i})).filter(x => current==="All" || x.a.genre===current);
   $("grid").innerHTML = list.length ? list.map(({a,i}) => `
     <button class="card" data-i="${i}">
-      <div class="cover" style="${coverStyle(a)}"><span class="tag">${a.genre}</span></div>
-      <div class="body">
-        <h3>${a.title}</h3>
-        <p>${a.excerpt}</p>
-        <div class="meta">${a.date} &middot; ${a.read}</div>
-      </div>
+      <div class="cover" style="${coverStyle(a)}"><span class="tag">${a.genre}</span>${a.mine?'<span class="mine">My draft</span>':''}</div>
+      <div class="body"><h3>${a.title}</h3><p>${a.excerpt}</p><div class="meta">${a.date} &middot; ${a.read}</div></div>
     </button>`).join("") : "<p>No articles in this genre yet. Check back soon.</p>";
   $("grid").querySelectorAll(".card").forEach(c => c.onclick = () => openArticle(+c.dataset.i));
 }
+function show(html){
+  $("paper").innerHTML = `<button class="close" aria-label="Close">&times;</button>` + html;
+  $("reader").classList.add("open"); $("reader").scrollTop = 0; document.body.style.overflow = "hidden";
+  $("paper").querySelector(".close").onclick = closeReader;
+  $("paper").querySelectorAll("img[data-e]").forEach(i => i.src = scene(i.dataset.g, i.dataset.e));
+}
+function closeReader(){ $("reader").classList.remove("open"); document.body.style.overflow = ""; }
+$("reader").addEventListener("click", e => { if (e.target === $("reader")) closeReader(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeReader(); });
 
 function openArticle(i){
-  const a = ARTICLES[i];
-  $("paper").innerHTML = `
-    <button class="close" aria-label="Close article">&times;</button>
-    <div class="cover" style="${coverStyle(a)}"><span class="tag">${a.genre}</span></div>
-    <div class="inner">
-      <h2>${a.title}</h2>
-      <div class="meta">${a.date} &middot; ${a.read}</div>
-      <div class="text">${a.body}</div>
-    </div>`;
-  $("reader").classList.add("open");
-  $("reader").scrollTop = 0;
-  document.body.style.overflow = "hidden";
-  $("paper").querySelector(".close").onclick = closeArticle;
+  const a = all()[i];
+  show(`<div class="cover" style="${coverStyle(a)}"><span class="tag">${a.genre}</span></div>
+    <div class="inner"><h2>${a.title}</h2><div class="meta">${a.date} &middot; ${a.read}</div><div class="text">${a.body}</div></div>`);
 }
-function closeArticle(){ $("reader").classList.remove("open"); document.body.style.overflow = ""; }
-$("reader").addEventListener("click", e => { if (e.target === $("reader")) closeArticle(); });
-document.addEventListener("keydown", e => { if (e.key === "Escape") closeArticle(); });
 
-$("eps").innerHTML = EPISODES.map(e => `
-  <div class="ep">
-    <div class="ico">🎙️</div>
-    <h3>${e.title}</h3>
-    <p>${e.desc}</p>
-    ${e.embed ? `<iframe src="${e.embed}" loading="lazy" allow="encrypted-media" title="${e.title}"></iframe>`
-      : e.audio ? `<audio controls preload="none" src="${e.audio}"></audio>`
-      : `<p><em>Add your audio file or embed link in the EPISODES section.</em></p>`}
-  </div>`).join("");
+/* ---------- Writer's Desk: write and publish new articles in the browser ---------- */
+let pendingImg = "";
+function openDesk(){
+  const mine = MINE.map((a,i) => `<div class="mini"><span><b>${a.title}</b> (${a.genre})</span>
+    <span><button data-copy="${i}">Copy code</button><button data-del="${i}">Delete</button></span></div>`).join("");
+  show(`<div class="inner form"><h2>Writer's Desk</h2>
+    <p class="meta">Write a new article here and publish it instantly on this page.</p>
+    <label>Title</label><input id="fTitle" placeholder="Your article title">
+    <label>Genre</label><select id="fGenre">${Object.keys(GENRES).map(g=>`<option>${g}</option>`).join("")}</select>
+    <label>Short summary (shown on the card)</label><input id="fExcerpt" placeholder="One or two lines">
+    <label>Cover photo</label><input id="fImg" type="file" accept="image/*">
+    <label>Article</label><textarea id="fBody" placeholder="Write your article. Leave a blank line between paragraphs. Start a line with ## to make a sub-heading."></textarea>
+    <p style="margin-top:16px"><button class="btn" id="fPub">Publish article</button></p>
+    <small>Note: articles published here are saved in this browser only. To make them permanent for all visitors, click "Copy code" and paste it at the top of the ARTICLES list in the file.</small>
+    <h4 style="margin-top:28px;font-family:var(--serif)">My published articles</h4>${mine || "<small>None yet.</small>"}</div>`);
+  $("fImg").onchange = e => {
+    const f = e.target.files[0]; if (!f) return;
+    const r = new FileReader();
+    r.onload = () => { const im = new Image(); im.onload = () => {
+      const k = Math.min(1, 1200/im.width), c = document.createElement("canvas");
+      c.width = im.width*k; c.height = im.height*k; c.getContext("2d").drawImage(im,0,0,c.width,c.height);
+      pendingImg = c.toDataURL("image/jpeg",.8); }; im.src = r.result; };
+    r.readAsDataURL(f);
+  };
+  $("fPub").onclick = () => {
+    const title = $("fTitle").value.trim(), text = $("fBody").value.trim();
+    if (!title || !text) { alert("Please add a title and some text."); return; }
+    const body = text.split(/\n\s*\n/).map(b => b.startsWith("## ") ? `<h4>${esc(b.slice(3))}</h4>` : `<p>${esc(b).replace(/\n/g,"<br>")}</p>`).join("");
+    const words = text.split(/\s+/).length;
+    MINE.unshift({ title: esc(title), genre: $("fGenre").value, mine: true,
+      date: new Date().toLocaleDateString("en-GB",{day:"2-digit",month:"short",year:"numeric"}),
+      read: Math.max(1,Math.round(words/200)) + " min read", image: pendingImg,
+      excerpt: esc($("fExcerpt").value.trim() || text.slice(0,110)+"..."), body });
+    pendingImg = ""; saveMine(); drawCards(); closeReader();
+    location.hash = "articles";
+  };
+  $("paper").querySelectorAll("[data-del]").forEach(b => b.onclick = () => {
+    if (confirm("Delete this article?")) { MINE.splice(+b.dataset.del,1); saveMine(); drawCards(); openDesk(); } });
+  $("paper").querySelectorAll("[data-copy]").forEach(b => b.onclick = () => {
+    const a = MINE[+b.dataset.copy];
+    const code = `{\n  title: ${JSON.stringify(a.title)},\n  genre: ${JSON.stringify(a.genre)},\n  date: ${JSON.stringify(a.date)},\n  read: ${JSON.stringify(a.read)},\n  image: "",  // add your picture path, e.g. "images/photo.jpg"\n  excerpt: ${JSON.stringify(a.excerpt)},\n  body: ${JSON.stringify(a.body)}\n},`;
+    navigator.clipboard.writeText(code).then(() => alert("Copied! Paste it at the top of the ARTICLES list."), () => prompt("Copy this code:", code)); });
+}
+$("deskBtn").onclick = e => { e.preventDefault(); openDesk(); };
 
 drawFilters();
 drawCards();
